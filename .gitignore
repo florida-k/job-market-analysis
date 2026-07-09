@@ -1,0 +1,5 @@
+# Ignore API credentials and passwords when committing
+.env
+
+# Ignore virtual environment stuffs when commiting
+.venv/
