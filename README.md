@@ -10,6 +10,8 @@ they will provide it.  )
     
 
 ## Goals
+Make a website where people can look up a job and see the common jobs available currently and see the job market 
+expectations and predictions for the future.
 
 ## Tech Stack
 - **Python 3.10+**
@@ -18,16 +20,18 @@ they will provide it.  )
 - **Matplotlib** — visualization?
 - **Jupyter** — exploratory notebooks?
 
-## Steps 
+
 ## Steps
 
 1. Made a Git repository and cloned it.
 
 2. Learned about the common structure used for software projects.
 
+    - input -> processing -> output
+
 3. Decided to use an API as the input source.
 
-4. Chose Adzuna as the API source.
+4. Chose Adzuna as the API source.(Mostly provides career information,jobs etc)
    - Created an account.
    - Received an API ID and API key.
 
@@ -38,6 +42,14 @@ they will provide it.  )
    - `.env` and `.gitignore` are files that were created in the project root.
    - `.venv/` is the existing virtual environment folder and is not the file to use.
 
-7. Made a file .env_testing to see if the .env file can be used properly
+7. Made a file `.env_testing` to see if the .env file can be used properly
 
     - I had to install package and (pip freeze > requirements.txt)in git to see the package in req.txt
+
+8. Made a file `adzuna_testing` to see if i can retrieve data from adzuna properly for the project
+
+    - We usee the same approach from .envtesting to read api id and key
+    - Learned to request from Adzuna
+    - received data in json format(like a dictionary)
+
+9. 
