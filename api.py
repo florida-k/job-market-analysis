@@ -1,5 +1,4 @@
 import requests
-
 from dotenv import load_dotenv
 import os
 
@@ -8,34 +7,43 @@ load_dotenv()
 app_id = os.getenv("API_ID")
 app_key = os.getenv("API_KEY")
 
-#writing function that requests from adzuna and stores in a list and returns
 
 def get_jobs(search_job):
     country = "us"
     page = 1
 
+    print("API ID loaded:", bool(app_id))
+    print("API KEY loaded:", bool(app_key))
+
     url = f"https://api.adzuna.com/v1/api/jobs/{country}/search/{page}"
 
     params = {
-        "app_id" : app_id,
+        "app_id": app_id,
         "app_key": app_key,
         "what": search_job
     }
 
-    response = requests.get(url,params = params)
+    response = requests.get(url, params=params)
+
+    print("Status code:", response.status_code)
+
+    if response.status_code != 200:
+        print("Adzuna request failed.")
+        print(response.text[:500])
+        return []
+
     data = response.json()
 
     all_jobs = []
 
-####adds all the jobs in from the search into a list so we can do what we want with it
     for job in data["results"]:
         job_data = {
-            "title": job["title"],
-            "company": job["company"]["display_name"],
-            "location": job["location"]["display_name"],
-            "description": job["description"],
-            "salary": job["salary_min"],
-            "created": job["created"]
+            "title": job.get("title"),
+            "company": job.get("company", {}).get("display_name"),
+            "location": job.get("location", {}).get("display_name"),
+            "description": job.get("description"),
+            "salary": job.get("salary_min"),
+            "created": job.get("created")
         }
 
         all_jobs.append(job_data)
