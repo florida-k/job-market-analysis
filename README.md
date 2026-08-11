@@ -51,5 +51,7 @@ expectations and predictions for the future.
     - We usee the same approach from .envtesting to read api id and key
     - Learned to request from Adzuna
     - received data in json format(like a dictionary)
+    - stored it in a list
 
-9. 
+9. Made file `api` that has a function to get data from adzuna and use it for the project
+10. 
