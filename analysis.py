@@ -1,5 +1,6 @@
 import pandas as pd
 from api import get_jobs
+import re
 
 
 def average_salary(jobs):
@@ -10,7 +11,7 @@ def average_salary(jobs):
     if salaries.empty:
         return None
 
-    return salaries.mean()
+    return round(float(salaries.mean()), 2)
 
 
 def top_locations(jobs, limit=5):
@@ -24,18 +25,71 @@ def top_companies(jobs, limit=5):
 
     return df["company"].value_counts().head(limit)
 
+def top_skills(jobs, limit=10):
+    skills = [
+        "Python",
+        "Java",
+        "C++",
+        "JavaScript",
+        "TypeScript",
+        "React",
+        "Angular",
+        "SQL",
+        "AWS",
+        "Azure",
+        "Docker",
+        "Kubernetes",
+        "Git",
+        "Excel",
+        "Tableau",
+        "Power BI"
+    ]
 
-jobs = get_jobs("software engineer")
+    skill_counts = {}
 
-if not jobs:
-    print("No jobs were retrieved. Check API credentials.")
-    exit()
+    for skill in skills:
+        count = 0
 
-print("Average Salary:")
-print(average_salary(jobs))
+        for job in jobs:
+            description = job.get("description") or ""
 
-print("\nTop Locations:")
-print(top_locations(jobs))
+            pattern = rf"\b{re.escape(skill)}\b"
 
-print("\nTop Companies:")
-print(top_companies(jobs))
+            if re.search(pattern, description, re.IGNORECASE):
+                count += 1
+
+        if count > 0:
+            percentage = round((count / len(jobs)) * 100, 1)
+            skill_counts[skill] = percentage
+
+    sorted_skills = sorted(
+        skill_counts.items(),
+        key=lambda item: item[1],
+        reverse=True
+    )
+
+    return dict(sorted_skills[:limit])
+
+
+def analyze_market(search_job):
+    jobs = get_jobs(search_job, pages=3)
+
+    if not jobs:
+        return None
+
+    return {
+        "job": search_job,
+        "job_count": len(jobs),
+        "average_salary": average_salary(jobs),
+        "top_locations": top_locations(jobs).to_dict(),
+        "top_companies": top_companies(jobs).to_dict(),
+        "top_skills": top_skills(jobs)
+    }
+
+
+if __name__ == "__main__":
+    results = analyze_market("software engineer")
+    print(results)
+
+    results = analyze_market("data analyst")
+    print(results)
