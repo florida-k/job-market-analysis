@@ -27,6 +27,10 @@ def top_companies(jobs, limit=5):
 
 jobs = get_jobs("software engineer")
 
+if not jobs:
+    print("No jobs were retrieved. Check API credentials.")
+    exit()
+
 print("Average Salary:")
 print(average_salary(jobs))
 

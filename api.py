@@ -2,7 +2,8 @@ import requests
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
+env_path = os.path.join(os.path.dirname(__file__), ".env")
+load_dotenv(env_path)
 
 app_id = os.getenv("API_ID")
 app_key = os.getenv("API_KEY")
