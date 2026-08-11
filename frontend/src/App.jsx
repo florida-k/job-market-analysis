@@ -1,122 +1,121 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [job, setJob] = useState("");
+  const [results, setResults] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  async function handleSearch() {
+    if (!job.trim()) {
+      return;
+    }
+
+    setLoading(true);
+    setResults(null);
+
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/analysis?job=${encodeURIComponent(job)}`
+      );
+
+      const data = await response.json();
+      setResults(data);
+    } catch (error) {
+      console.error("Error fetching job data:", error);
+    }
+
+    setLoading(false);
+  }
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
+    <div className="app">
+      <h1>Job Market Analysis</h1>
+
+      <p>Search for a job title to explore current market trends.</p>
+
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Software Engineer"
+          value={job}
+          onChange={(e) => setJob(e.target.value)}
+        />
+
+        <button onClick={handleSearch}>
+          Search
         </button>
-      </section>
+      </div>
 
-      <div className="ticks"></div>
+      {loading && <p>Loading job market data...</p>}
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+      {results && !results.error && (
+        <div className="results">
+          <h2>{results.job}</h2>
+
+          <div className="summary">
+            <div>
+              <h3>Jobs Analyzed</h3>
+              <p>{results.job_count}</p>
+            </div>
+
+            <div>
+              <h3>Average Salary</h3>
+              <p>
+                {results.average_salary
+                  ? `$${results.average_salary.toLocaleString()}`
+                  : "Not available"}
+              </p>
+            </div>
+          </div>
+
+          <div className="section">
+            <h3>Top Companies</h3>
+
+            {Object.entries(results.top_companies).map(
+              ([company, count]) => (
+                <p key={company}>
+                  {company}: {count}
+                </p>
+              )
+            )}
+          </div>
+
+          <div className="section">
+            <h3>Top Locations</h3>
+
+            {Object.entries(results.top_locations).map(
+              ([location, count]) => (
+                <p key={location}>
+                  {location}: {count}
+                </p>
+              )
+            )}
+          </div>
+
+          <div className="section">
+            <h3>Top Skills</h3>
+
+            {Object.keys(results.top_skills).length === 0 ? (
+              <p>No common skills found.</p>
+            ) : (
+              Object.entries(results.top_skills).map(
+                ([skill, percentage]) => (
+                  <p key={skill}>
+                    {skill}: {percentage}%
+                  </p>
+                )
+              )
+            )}
+          </div>
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      )}
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      {results?.error && (
+        <p>No jobs found for that search.</p>
+      )}
+    </div>
+  );
 }
 
-export default App
+export default App;

@@ -3,3 +3,7 @@
 
 # Ignore virtual environment stuffs when commiting
 .venv/
+
+
+__pycache__/
+*.pyc
