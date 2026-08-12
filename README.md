@@ -53,5 +53,27 @@ expectations and predictions for the future.
     - received data in json format(like a dictionary)
     - stored it in a list
 
-9. Made file `api` that has a function to get data from adzuna and use it for the project
-10. 
+9. Improoved `api.py` to retrieve multiple pages of jobs from Adzuna
+
+    - Allows us to analyze more jobs instead of only the first 10 results.
+    - Added handling for missing job information
+
+10. Made an `analysis.py` file to process the job data using pandas
+
+    - Finds the average salary, top locations and top hiring companies.
+    - Added a function that can analyze different job searches, such as "software engineer" or "data analyst"
+    - Started analyzing common skills mentioned in job descriptions.
+
+11. Made an `app.py` file using FastAPI to connect the analysis to a website.
+
+    - Created an endpoint where a job title can be searched and the analysis is returned as JSON.
+
+12. Created a frontend using React and Vite.
+
+    - Added a search bar where users can enter a job title.
+    - Connected the frontend to the FastAPI backend.
+    - Displays the number of jobs analysed average salary,top companies,top locations, and skills.
+
+13. Added basic CSS styling to make the website look like a job market dashboard.
+
+14. Updated `.gitignore` to ignore Python cache files (`_pycache_` and `.pyc`)along wwith the `.env`
