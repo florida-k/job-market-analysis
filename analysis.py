@@ -4,26 +4,26 @@ import re
 
 
 def average_salary(jobs):
-    df = pd.DataFrame(jobs)
+    df = pd.DataFrame(jobs) # make table of the list from api.py
 
-    salaries = df["salary"].dropna()
+    salaries = df["salary"].dropna() # drop salaries  with no number
 
     if salaries.empty:
         return None
 
-    return round(float(salaries.mean()), 2)
+    return round(float(salaries.mean()), 2) #
 
 
 def top_locations(jobs, limit=5):
     df = pd.DataFrame(jobs)
 
-    return df["location"].value_counts().head(limit)
+    return df["location"].value_counts().head(limit) # returns th e top limit of repeated location
 
 
 def top_companies(jobs, limit=5):
     df = pd.DataFrame(jobs)
 
-    return df["company"].value_counts().head(limit)
+    return df["company"].value_counts().head(limit) # returns th e top limit of repeated top companies
 
 def top_skills(jobs, limit=10):
     skills = [

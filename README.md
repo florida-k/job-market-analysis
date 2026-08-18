@@ -53,7 +53,7 @@ expectations and predictions for the future.
     - received data in json format(like a dictionary)
     - stored it in a list
 
-9. Improoved `api.py` to retrieve multiple pages of jobs from Adzuna
+9. Improved `api.py` to retrieve multiple pages of jobs from Adzuna
 
     - Allows us to analyze more jobs instead of only the first 10 results.
     - Added handling for missing job information
@@ -77,3 +77,4 @@ expectations and predictions for the future.
 13. Added basic CSS styling to make the website look like a job market dashboard.
 
 14. Updated `.gitignore` to ignore Python cache files (`_pycache_` and `.pyc`)along wwith the `.env`
+
