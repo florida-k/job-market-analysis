@@ -78,3 +78,7 @@ expectations and predictions for the future.
 
 14. Updated `.gitignore` to ignore Python cache files (`_pycache_` and `.pyc`)along wwith the `.env`
 
+15. Updated the function topskills to get skills in the description and not manual
+
+16. In `analysis.py` added function with mathplotlib to display a chart
+

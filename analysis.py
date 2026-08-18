@@ -1,6 +1,8 @@
 import pandas as pd
 from api import get_jobs
 import re
+from keybert import KeyBERT
+import matplotlib.pyplot as plt
 
 
 def average_salary(jobs):
@@ -26,49 +28,24 @@ def top_companies(jobs, limit=5):
     return df["company"].value_counts().head(limit) # returns th e top limit of repeated top companies
 
 def top_skills(jobs, limit=10):
-    skills = [
-        "Python",
-        "Java",
-        "C++",
-        "JavaScript",
-        "TypeScript",
-        "React",
-        "Angular",
-        "SQL",
-        "AWS",
-        "Azure",
-        "Docker",
-        "Kubernetes",
-        "Git",
-        "Excel",
-        "Tableau",
-        "Power BI"
-    ]
+    all_text = ""
 
-    skill_counts = {}
+    for job in jobs:
+        all_text += (job.get("description") or "") + " "
 
-    for skill in skills:
-        count = 0
+    if not all_text.strip():
+        return {}
 
-        for job in jobs:
-            description = job.get("description") or ""
+    kw_model = KeyBERT()
 
-            pattern = rf"\b{re.escape(skill)}\b"
-
-            if re.search(pattern, description, re.IGNORECASE):
-                count += 1
-
-        if count > 0:
-            percentage = round((count / len(jobs)) * 100, 1)
-            skill_counts[skill] = percentage
-
-    sorted_skills = sorted(
-        skill_counts.items(),
-        key=lambda item: item[1],
-        reverse=True
+    keywords = kw_model.extract_keywords(
+        all_text,
+        keyphrase_ngram_range=(1,2),
+        stop_words = "english",
+        top_n=limit
     )
 
-    return dict(sorted_skills[:limit])
+    return dict(keywords)
 
 
 def analyze_market(search_job):
@@ -86,10 +63,24 @@ def analyze_market(search_job):
         "top_skills": top_skills(jobs)
     }
 
+def companychart(jobs):
+    companies = top_companies(jobs)
+
+    companies.plot(kind="bar")
+
+    plt.title("Top companies")
+    plt.xlabel("Company")
+    plt.ylabel("Jobs")
+
+    plt.tight_layout()
+    plt.show()
+
 
 if __name__ == "__main__":
-    results = analyze_market("software engineer")
-    print(results)
+    pass
+    #results = analyze_market("software engineer")
+    #print(results)
 
-    results = analyze_market("data analyst")
-    print(results)
+    #results = analyze_market("data analyst")
+    #print(results)
+
