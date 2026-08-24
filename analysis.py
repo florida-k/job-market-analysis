@@ -38,7 +38,30 @@ def top_skills(jobs, limit=10):
         "Excel", "R", "Spark", "Hadoop", "REST API",
         "Agile", "Scrum", "Jira", "Salesforce", "QuickBooks",
         "Accounting", "Marketing", "SEO", "Customer Service",
-        "Project Management", "Communication"
+        "Project Management", "Communication","Leadership","Problem Solving",
+        "Critical Thinking","Time Management","Teamwork","Public Speaking","Negotiation",
+        "Research","Technical Writing","Documentation","Customer Support",
+        "Customer Relations","Client Management","Business Analysis","Business Intelligence",
+        "Business Development","Operations Management","Data Entry",
+        "Data Visualization","Statistics","ETL","Data Warehousing",
+        "Big Data","Predictive Modeling","Artificial Intelligence",
+        "Deep Learning","Computer Vision","Natural Language Processing",
+        "NLP","Generative AI","LLM","OpenAI","PHP","Ruby","Ruby on Rails",
+        "Go","Golang","Rust","Swift","Kotlin","",".NET","Spring Boot",
+        "Angular","Vue","Next.js","Express.js","Bootstrap","Tailwind CSS",
+        "GraphQL","API Development","Microservices","CI/CD","Jenkins",
+        "Terraform","Ansible","Cybersecurity","Network Security","Penetration Testing",
+        "Incident Response","Risk Management","Compliance","Computer Networking",
+        "TCP/IP","Active Directory","Windows Server","AutoCAD",
+        "SolidWorks","MATLAB","Simulink","Embedded Systems","ROS",
+        "Healthcare","Nursing","Patient Care","Epic","Cerner",
+        "Medical Records","Clinical Research","Finance","Financial Analysis","Financial Modeling",
+        "Auditing","Bookkeeping","Tax Preparation","Recruiting",
+        "Talent Acquisition","Human Resources","HRIS",
+        "Supply Chain","Inventory Management","Procurement","Logistics",
+        "Digital Marketing","Content Creation","Social Media Marketing","Google Analytics",
+        "Google Ads","Email Marketing","Teaching","Curriculum Development",
+        "Tutoring","Lesson Planning"
     ]
     skillcounts = {}
 
