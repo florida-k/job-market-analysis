@@ -49,7 +49,7 @@ def top_skills(jobs, limit=10):
 
 
 def analyze_market(search_job):
-    jobs = get_jobs(search_job, pages=10)
+    jobs = get_jobs(search_job, pages=5)
 
     if not jobs:
         return None

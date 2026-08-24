@@ -95,7 +95,7 @@ function App() {
           </div>
 
           <div className="section">
-            <h3>Top Skills</h3>
+            <h3>Most Mentioned Skills</h3>
 
             {Object.keys(results.top_skills).length === 0 ? (
               <p>No common skills found.</p>
@@ -103,7 +103,7 @@ function App() {
               Object.entries(results.top_skills).map(
                 ([skill, percentage]) => (
                   <p key={skill}>
-                    {skill}: {percentage}%
+                    {skill}: {percentage}% of postings
                   </p>
                 )
               )
