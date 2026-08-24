@@ -1,7 +1,6 @@
 import pandas as pd
 from api import get_jobs
 import re
-from keybert import KeyBERT
 import matplotlib.pyplot as plt
 
 
@@ -28,24 +27,42 @@ def top_companies(jobs, limit=5):
     return df["company"].value_counts().head(limit) # returns th e top limit of repeated top companies
 
 def top_skills(jobs, limit=10):
-    all_text = ""
+    skills = [
+        "Python", "Java", "C++", "C", "JavaScript", "TypeScript",
+        "React", "Node.js", "HTML", "CSS", "SQL", "MySQL",
+        "PostgreSQL", "MongoDB", "Git", "GitHub", "Linux",
+        "Docker", "Kubernetes", "AWS", "Azure", "GCP",
+        "FastAPI", "Django", "Flask", "Pandas", "NumPy",
+        "Matplotlib", "TensorFlow", "PyTorch", "Machine Learning",
+        "Data Analysis", "Data Science", "Power BI", "Tableau",
+        "Excel", "R", "Spark", "Hadoop", "REST API",
+        "Agile", "Scrum", "Jira", "Salesforce", "QuickBooks",
+        "Accounting", "Marketing", "SEO", "Customer Service",
+        "Project Management", "Communication"
+    ]
+    skillcounts = {}
 
-    for job in jobs:
-        all_text += (job.get("description") or "") + " "
+    for skill in skills:
+        count =0
 
-    if not all_text.strip():
-        return {}
+        for job in jobs:
+            description = (job.get("description") or "").lower()
 
-    kw_model = KeyBERT()
+            if skill.lower() in description:
+                count+=1
 
-    keywords = kw_model.extract_keywords(
-        all_text,
-        keyphrase_ngram_range=(1,2),
-        stop_words = "english",
-        top_n=limit
+        if count >0:
+
+            percentage = round((count / len(jobs)) *100,1)
+            skillcounts[skill] = percentage
+
+
+    sortedskills = sorted(
+        skillcounts.items(),
+        key=lambda x:x[1],
+        reverse=True
     )
-
-    return dict(keywords)
+    return dict(sortedskills[:limit])
 
 
 def analyze_market(search_job):
