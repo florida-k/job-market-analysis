@@ -28,14 +28,14 @@ def top_companies(jobs, limit=5):
 
 def top_skills(jobs, limit=10):
     skills = [
-        "Python", "Java", "C++", "C", "JavaScript", "TypeScript",
+        "Python", "Java", "C++", "C Programming", "JavaScript", "TypeScript",
         "React", "Node.js", "HTML", "CSS", "SQL", "MySQL",
         "PostgreSQL", "MongoDB", "Git", "GitHub", "Linux",
         "Docker", "Kubernetes", "AWS", "Azure", "GCP",
         "FastAPI", "Django", "Flask", "Pandas", "NumPy",
         "Matplotlib", "TensorFlow", "PyTorch", "Machine Learning",
         "Data Analysis", "Data Science", "Power BI", "Tableau",
-        "Excel", "R", "Spark", "Hadoop", "REST API",
+        "Excel", "R Programming", "Spark", "Hadoop", "REST API",
         "Agile", "Scrum", "Jira", "Salesforce", "QuickBooks",
         "Accounting", "Marketing", "SEO", "Customer Service",
         "Project Management", "Communication","Leadership","Problem Solving",

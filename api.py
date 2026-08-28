@@ -32,6 +32,7 @@ def get_jobs(search_job, pages=5):
             continue
 
         data = response.json()
+        print(data)
 
         for job in data["results"]:
             job_data = {
