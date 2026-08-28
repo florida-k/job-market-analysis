@@ -17,7 +17,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/analysis?job=${encodeURIComponent(job)}`
+        `https://job-market-analysis-api.onrender.com/analysis?job=${encodeURIComponent(job)}`
       );
 
       const data = await response.json();
